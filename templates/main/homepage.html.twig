@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hi! {% endblock %}
+
+{% block body %}
+    <strong>Starshop</strong>: Yeah!
+
+    <div>
+        Total ships squared: {{ starshipCount ** 2 }}
+
+        {% if starshipCount > 10 %}
+            That's <i>a lot</i>.
+        {% endif %}
+    </div>
+
+{% endblock %}
