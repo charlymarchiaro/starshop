@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Model\Starship;
 use App\Repository\StarshipRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,16 +13,20 @@ class StarshipApiController extends AbstractController
     #[Route('', methods: ['GET'])]
     public function getCollection(StarshipRepository $repository): Response
     {
-        return $this->json($repository->findAll());
+        $starships = $repository->findAll();
+
+        return $this->json($starships);
     }
 
-    #[Route('/{id}', methods: ['GET'])]
+    #[Route('/{id<\d+>}', methods: ['GET'])]
     public function get(int $id, StarshipRepository $repository): Response
     {
-        $starship = $repository->findById($id);
+        $starship = $repository->find($id);
+
         if (!$starship) {
             throw $this->createNotFoundException('Starship not found');
         }
+
         return $this->json($starship);
     }
 }

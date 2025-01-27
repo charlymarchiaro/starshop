@@ -7,18 +7,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/starships')]
 class StarshipController extends AbstractController
 {
-    #[Route('/{id}', name: 'app_starship_show', methods: ['GET'])]
+    #[Route('/starships/{id<\d+>}', name: 'app_starship_show')]
     public function show(int $id, StarshipRepository $repository): Response
     {
-        $starship = $repository->findById($id);
-        if (!$starship) {
+        $ship = $repository->find($id);
+        if (!$ship) {
             throw $this->createNotFoundException('Starship not found');
         }
+
         return $this->render('starship/show.html.twig', [
-            'starship' => $starship
+            'ship' => $ship,
         ]);
     }
 }
